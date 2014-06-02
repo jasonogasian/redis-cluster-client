@@ -1,5 +1,5 @@
 {
-  "name": "redis-sentinel-client",
+  "name": "redis-clustering-client",
   "version": "0.0.0",
   "description": "A client for communicating with a Redis Cluster via the cluster's Sentinel applications.",
   "main": "redis-sentinel.js",
@@ -8,19 +8,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jasonogasian/redis-sentinel-client.git"
+    "url": "https://github.com/jasonogasian/redis-clustering-client.git"
   },
   "keywords": [
     "redis",
     "sentinel",
-    "cluster"
+    "cluster",
+    "client"
   ],
   "author": "Jason Ogasian",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jasonogasian/redis-sentinel-client/issues"
+    "url": "https://github.com/jasonogasian/redis-clustering-client/issues"
   },
-  "homepage": "https://github.com/jasonogasian/redis-sentinel-client",
+  "homepage": "https://github.com/jasonogasian/redis-clustering-client",
   "dependencies": {
     "redis": "~0.10.3"
   }
