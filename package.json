@@ -1,0 +1,27 @@
+{
+  "name": "redis-sentinel-client",
+  "version": "0.0.0",
+  "description": "A client for communicating with a Redis Cluster via the cluster's Sentinel applications.",
+  "main": "redis-sentinel.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jasonogasian/redis-sentinel-client.git"
+  },
+  "keywords": [
+    "redis",
+    "sentinel",
+    "cluster"
+  ],
+  "author": "Jason Ogasian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jasonogasian/redis-sentinel-client/issues"
+  },
+  "homepage": "https://github.com/jasonogasian/redis-sentinel-client",
+  "dependencies": {
+    "redis": "~0.10.3"
+  }
+}
