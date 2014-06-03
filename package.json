@@ -1,6 +1,6 @@
 {
   "name": "redis-clustering-client",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A client for communicating with a Redis Cluster via the cluster's Sentinel applications.",
   "main": "redis-sentinel.js",
   "scripts": {
