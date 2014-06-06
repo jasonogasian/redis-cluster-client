@@ -168,6 +168,11 @@ function getMasterClient(sentinelClient, cluster, callback) {
         callback('(getMaster) ' + err);
         return;
       }
+      if (!master) {
+        sentinelClient.quit();
+        callback('(getMaster) No Master returned!');
+        return;        
+      }
       sentinelClient.quit();
 
       // Create the client for the redis Master server
