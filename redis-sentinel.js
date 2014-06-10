@@ -43,15 +43,24 @@ var Sentinel = {
   init: function(cluster, sentinelArray, callback) {
     this.cluster = cluster;
 
+    // Remove defaults if paths are provided
+    if (sentinelArray.length) {
+      this.sentinels = [];
+    }
+
+    // Loop through available sentinels and add to this object
     sentinelArray.forEach(function(s) {
       this.sentinels.push(s);
     }, this);
+
+    // Connect to the cluster master to test connection through sentinel
     connect(this, function(err, masterClient) {
       if (err && callback) {
         callback('(init) ' + err);
         return;
       }
 
+      // Close the connection and call back
       masterClient.quit();
       if (callback) callback();
     });
@@ -147,7 +156,7 @@ function connect(that, callback, slave) {
         getSlaveClient(sentinelClient, that.cluster, callback);
       }
       else {
-        getMasterClient(sentinelClient, that.cluster, callback);
+        getMasterClient(sentinelClient, that.cluster, that.preferredSentinel.host, callback);
       }
     });
   }
@@ -160,7 +169,7 @@ function connect(that, callback, slave) {
  * @param  {String}      cluster        Name of the Redis cluster (i.e. mymaster)
  * @param  {Function}    callback       callback(err, [RedisClient])
  */
-function getMasterClient(sentinelClient, cluster, callback) {
+function getMasterClient(sentinelClient, cluster, sentinelHost, callback) {
   sentinelClient.send_command('SENTINEL', ['get-master-addr-by-name', cluster],
     function(err, master) {
       if (err) {
@@ -168,12 +177,12 @@ function getMasterClient(sentinelClient, cluster, callback) {
         callback('(getMaster) ' + err);
         return;
       }
-      if (!master) {
-        sentinelClient.quit();
-        callback('(getMaster) No Master returned!');
-        return;        
-      }
       sentinelClient.quit();
+
+      // Check for localhost URL
+      if (master[0] == '::1') {
+        master[0] = sentinelHost;
+      }
 
       // Create the client for the redis Master server
       var redisMaster = redis.createClient(master[1], master[0]);
