@@ -75,6 +75,7 @@ var Sentinel = {
    * @param  {Boolean}  slave    Connect to a random slave instead of master
    */
   command: function(cmd, args, callback, slave) {
+
     connect(this, function(err, redisClient) {
       if (err && callback) {
         callback('(command) ' + err);
@@ -86,6 +87,24 @@ var Sentinel = {
         if (callback) callback(err, resp);
       });
     }, slave);
+  },
+
+
+  /**
+   * Create a Multi object for sending bulk transactional commands to the 
+   * connected Redis server.
+   * @param  {Function} callback callback(err, [Multi])
+   */
+  multi: function(callback) {
+    connect(this, function(err, redisClient) {
+      if (err) {
+        callback(err);
+      }
+      else {
+        callback(err, redisClient.multi());
+      }
+
+    });
   }
 }
 
